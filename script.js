@@ -38,6 +38,40 @@ function displayTodos() {
   todoList.innerHTML = todosHtml;
 }
 
+function tododisplay(e) {
+  if (e.key === "Enter") {
+    e.preventDefault(); 
+    const timestamp = Date.now();
+  let todoValue = form.value;
+  if (!todoValue) {
+    return;
+  } else {
+    let todoObj = {
+      id: new Date(timestamp).toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+      text: todoValue,
+      completed: false,
+    };
+    todoArray.push(todoObj);
+
+    localStorage.setItem("todos", JSON.stringify(todoArray));
+    form.value = "";
+    displayTodos();
+    toggleDeleteButton();
+  }
+}
+}
+
+
+
+
+
+
+
+
+
 // Toggle the Delete All Button
 function toggleDeleteButton() {
   let storedTodos = localStorage.getItem("todos");
@@ -51,6 +85,7 @@ function toggleDeleteButton() {
 }
 
 // Add Todo
+
 let addbtn = document.querySelector(".add-btn");
 let form = document.querySelector("#todoInput");
 addbtn.addEventListener("click", () => {
